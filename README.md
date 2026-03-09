@@ -1,101 +1,160 @@
-# 🚀 Proje Başlangıç Rehberi
+# 🚀 RoomPilot
 
-Bu rehber, hiç kodlama veya proje kurulumu tecrübesi olmayan kişiler için en basit ve anlaşılır haliyle hazırlanmıştır. Lütfen adımları sırayla, atlamadan takip edin.
+RoomPilot, otel ve restoran işletmeleri için geliştirilmiş modern bir rezervasyon yönetim panelidir. İşletmelerin rezervasyonlarını, müşterilerini, odalarını ve analizlerini tek bir merkezi sistem üzerinden yönetmelerini sağlar.
 
----
+Modern web teknolojileri kullanılarak geliştirilen RoomPilot, ölçeklenebilir ve modüler bir mimariye sahiptir.
 
-## 🔧 1. Olmazsa Olmaz Programlar (Ön Gereksinimler)
+## 📸 Dashboard Görünümü
 
-Projeyi bilgisayarınızda çalıştırabilmeniz için ilk olarak şu programları kurmanız gerekiyor:
+![RoomPilot Dashboard](docs/dashboard.png)
 
-1. **Bun (Çalıştırma Ortamı)**: Projemizin kalbidir.
-   - **Mac/Linux kullanıyorsanız** terminali açıp şunu yapıştırın:
-     `curl -fsSL https://bun.sh/install | bash`
-   - **Windows kullanıyorsanız** PowerShell'i yönetici olarak açıp şunu yapıştırın:
-     `powershell -c "irm bun.sh/install.ps1 | iex"`
-   
-2. **PostgreSQL (Veritabanı)**: Verilerin kaydedileceği yer.
-   - Bilgisayarınıza [PostgreSQL](https://www.postgresql.org/download/) indirip kurun ("İleri, İleri" diyerek kurabilirsiniz).
-   - Kurulum sırasında sizden bir şifre isteyecektir. Bu şifreyi **`postgres`** olarak ayarlarsanız kurulumda hiçbir dosya değiştirmenize gerek kalmaz.
-
-3. **Git**: Kod klasörünü bilgisayara indirebilmek için.
-   - [git-scm.com](https://git-scm.com) adresinden indirip kolayca kurabilirsiniz.
-
-4. **VS Code**: Kodlara bakmak için kullanacağımız editör. (Önerilen)
+> `docs/dashboard.png` — Dashboard ekran görüntüsünü bu klasöre ekleyebilirsiniz.
 
 ---
 
-## 📦 2. Adım Adım Kurulum
+## ✨ Özellikler
 
-### Adım 1: Projeyi Bilgisayarınıza İndirin
-cd <projenin-klasor-ismi>
+### 🏨 İşletme Yönetimi (Entities)
 
-### Adım 2: Gerekli Paketleri Yükleyin
-Projemizin çalışması için internetteki bazı paketlere ihtiyacı var. Bunları tek bir komutla çekiyoruz:
+- Otel veya restoran ekleme
+- Oda / masa tipleri oluşturma
+- Oda yönetimi
+- İşletme galeri görselleri
+- Kampanya yönetimi (yılbaşı, bayram, hafta sonu)
+- Çalışan yönetimi (garson, chef, house keeping vb.)
+- Ekipman takibi (çatal, bıçak, tabak, çarşaf, yastık)
+- Stok ve gider takibi
+
+### 📅 Rezervasyon Yönetimi
+
+- Rezervasyon oluşturma
+- Rezervasyon güncelleme
+- Rezervasyon durum takibi
+- Takvim tabanlı doluluk sistemi
+
+### 👤 Müşteri Yönetimi
+
+- Müşteri bilgilerini kaydetme
+- Rezervasyon geçmişi
+- İletişim bilgileri
+
+### 📊 Dashboard ve Analizler
+
+- Günlük rezervasyon sayısı
+- Toplam müşteri sayısı
+- İşletme sayısı
+- Toplam gelir, aylık gelir grafikleri
+- Doluluk oranı (otel)
+- Stok uyarıları (restoran)
+- Kar / zarar grafikleri
+
+### 🔔 Bildirim Şablonları
+
+- Rezervasyon onay mesajları
+- Email bildirim şablonları
+
+---
+
+## 🧠 Kullanılan Teknolojiler
+
+| Katman   | Teknolojiler                          |
+|----------|----------------------------------------|
+| Frontend | React, Vite, TanStack Router, TanStack Query, shadcn/ui, TailwindCSS |
+| Backend  | Bun, Elysia, Prisma ORM, PostgreSQL    |
+| Monorepo | Turborepo, Bun                         |
+
+---
+
+## 🏗 Proje Yapısı
+
+```
+RoomPilot
+├── apps
+│   ├── api          # Backend API (Elysia)
+│   └── web          # React Admin Panel
+├── packages
+│   └── database     # Prisma şeması, migration, seeder
+├── config           # Ortam ayarları (.env.example)
+└── docs             # Dokümantasyon ve ekran görüntüleri
+```
+
+---
+
+## ⚙️ Kurulum
+
+### Gereksinimler
+
+- [Bun](https://bun.sh)
+- [PostgreSQL](https://www.postgresql.org/download/)
+- [Git](https://git-scm.com)
+
+### 1️⃣ Repoyu klonla
+
+```bash
+git clone https://github.com/rokiee09/RoomPilot.git
+cd RoomPilot
+```
+
+### 2️⃣ Bağımlılıkları yükle
+
 ```bash
 bun install
 ```
-*(Bu işlem internet hızınıza bağlı olarak 1-2 dakika sürebilir, bitmesini bekleyin.)*
 
-### Adım 3: Ayar Dosyalarını Hazırlayın
-Projeyi, kendi bilgisayarımızda çalışacak şekilde yapılandırmamız lazım. Terminale sırasıyla bunları yapıştırın:
+### 3️⃣ Ortam değişkenlerini oluştur
+
 ```bash
 cp config/apps/api/.env.example config/apps/api/.env
 cp config/apps/web/.env.example config/apps/web/.env
 ```
-*(Windows'ta "cp çalışmıyor" hatası alırsanız, klasörün içine girip `.env.example` adlı dosyanın bir kopyasını oluşturup adını `.env` yapabilirsiniz.)*
 
-### Adım 4: Veritabanını Kurun
-Veritabanımızdaki tabloların otomatik oluşması için terminale şu sırayla yazın (Önce PostgreSQL'in bilgisayarınızda çalışıyor olduğundan emin olun!):
+`config/apps/api/.env` içinde `DATABASE_URL` değerini güncelleyin:
+
+```
+DATABASE_URL="postgresql://user:password@localhost:5432/roompilot"
+```
+
+### 4️⃣ Veritabanı migration
+
 ```bash
 cd packages/database
-bun run prisma migrate dev
-bun run prisma generate
+bun run migrate
+bun run generate
 cd ../..
 ```
 
----
+### 5️⃣ (Opsiyonel) Örnek verileri yükle
 
-## 🎬 3. Projeyi Çalıştırma
+```bash
+cd packages/database
+bun run seeder run entities-restaurants
+bun run seeder run entities-extended
+cd ../..
+```
 
-Kurulum tamamen bitti! Artık projeyi başlatabiliriz. Ana proje klasöründe terminale şunu yazın:
+### 6️⃣ Geliştirme sunucusunu başlat
 
 ```bash
 bun run dev
 ```
 
-Ekranda birkaç yazı belirecek ve yeşil yazılar göreceksiniz.
-- **Siteye Girmek İçin:** Tarayıcınızda `http://localhost:5173` adresine gidin.
-- (Eğer her şey tamamsa karşınıza giriş ekranı çıkacaktır.)
+---
+
+## 🌐 Uygulama Adresleri
+
+| Servis    | Adres                    |
+|-----------|--------------------------|
+| Panel     | http://localhost:3000    |
+| API       | http://localhost:3000 (Vite buradan proxy edilir) |
 
 ---
 
-## 🚨 4. Hata Çözüm Rehberi (Kurtarıcı Adımlar)
+## 👨‍💻 Geliştirici
 
-Eğer projenizi çalıştırırken veya kurarken bir şeyler ters giderse **paniğe kapılmayın**. En çok karşılaşılan sorunları nasıl çözeceğiniz aşağıda:
+**Burak Avcı** — [GitHub](https://github.com/rokiee09)
 
-### 💡 "bun install" yaparken hata aldım / Paketler hatalı yüklendi!
-Paketler yüklenirken bir şebeke problemi veya uyumsuzluk olmuş olabilir. En etkili çözüm "**Kapatıp Tekrar Açmak / Silip Yüklemek**"tir :)
-Projenin ana klasöründeyken terminalde şunları yazarak temizleyip baştan yükleyin:
+---
 
-**Mac/Linux için:**
-```bash
-rm -rf node_modules
-rm bun.lockb
-bun install
-```
+## 📄 Lisans
 
-**Windows (PowerShell) için:**
-```bash
-Remove-Item -Recurse -Force node_modules
-Remove-Item -Force bun.lockb
-bun install
-```
-*(Bu komutlar eski bozuk kurulumu silerek `bun install` ile en temiz haliyle tekrar yükler.)*
-
-### 💡 "Database Connection" (Veritabanı Bağlantı) Hatası
-- PostgreSQL veritabanını kurduğunuzdan ve arka planda açık olduğundan emin olun.
-- Şifrenizi kurulumda `postgres` yapmadıysanız, `config/apps/api/.env` dosyasına girip oradaki `postgresql://postgres:postgres@localhost...` yazan kısımdaki ikinci `postgres`'i koyduğunuz kendi şifrenizle değiştirin.
-
-### 💡 "Port 5173 / 3000 is already in use" (Port dolu) Hatası
-Arka planda projeyi zaten çalıştırmışsınız veya başka bir program bu kanalları kullanıyor olabilir. Terminal'i tamamen kapatıp yeni bir terminal açarak tekrar deneyin.
+Bu proje MIT lisansı ile lisanslanmıştır.
