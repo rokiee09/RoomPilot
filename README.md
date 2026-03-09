@@ -8,8 +8,6 @@ Modern web teknolojileri kullanılarak geliştirilen RoomPilot, ölçeklenebilir
 
 ![RoomPilot Dashboard](docs/dashboard.png)
 
-> `docs/dashboard.png` — Dashboard ekran görüntüsünü bu klasöre ekleyebilirsiniz.
-
 ---
 
 ## ✨ Özellikler
